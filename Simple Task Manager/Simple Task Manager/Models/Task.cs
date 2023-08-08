@@ -11,7 +11,17 @@ namespace Simple_Task_Manager.Models
         private DateTime currentDate;
         private DateTime endDate;
 
-        public int Id { get; set; }
+        protected Task(int id, string name, string description, ImportanceLevel importanceLevel, DateTime endDate)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Level = importanceLevel;
+            EndDate = endDate;
+            currentDate = DateTime.Now.Date;
+        }
+
+        public int Id { get; private set; }
 
         public string Name
         {
@@ -28,7 +38,7 @@ namespace Simple_Task_Manager.Models
 
         public string Description { get; private set; }
 
-        public ImportanceLevel importanceLevel
+        public ImportanceLevel Level
         {
             get => level;
             private set

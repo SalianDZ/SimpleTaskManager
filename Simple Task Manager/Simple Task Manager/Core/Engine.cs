@@ -8,12 +8,12 @@ namespace Simple_Task_Manager.Core
     {
         private IReader reader;
         private IWriter writer;
-        private IController controller;
+        private ITaskManager taskManager;
         public Engine()
         {
             this.reader = new Reader();
             this.writer = new Writer();
-            this.controller = new Controller();
+            this.taskManager = new TaskManager();
         }
         public void Run()
         {
@@ -28,45 +28,46 @@ namespace Simple_Task_Manager.Core
                 {
                     string result = string.Empty;
 
-                    if (input[0] == "CreateRobot")
+                    if (input[0] == "AddTask")
                     {
-                        string model = input[1];
-                        string typeName = input[2];
+                        string name = input[1];
+                        string taskType = input[2];
+                        string description = input[3];
+                        DateTime endDate = DateTime.Parse(input[4]);
+                        result = taskManager.AddTask(name, taskType, description, endDate);
+                    }
+                    //else if (input[0] == "CreateSupplement")
+                    //{
+                    //    string typeName = input[1];
 
-                        result = controller.CreateRobot(model, typeName);
-                    }
-                    else if (input[0] == "CreateSupplement")
-                    {
-                        string typeName = input[1];
+                    //    result = taskManager.CreateSupplement(typeName);
+                    //}
+                    //else if (input[0] == "UpgradeRobot")
+                    //{
+                    //    string model = input[1];
+                    //    string supplementTypeName = input[2];
 
-                        result = controller.CreateSupplement(typeName);
-                    }
-                    else if (input[0] == "UpgradeRobot")
-                    {
-                        string model = input[1];
-                        string supplementTypeName = input[2];
+                    //    result = taskManager.UpgradeRobot(model, supplementTypeName);
+                    //}
+                    //else if (input[0] == "RobotRecovery")
+                    //{
+                    //    string model = input[1];
+                    //    int minutes = int.Parse(input[2]);
 
-                        result = controller.UpgradeRobot(model, supplementTypeName);
-                    }
-                    else if (input[0] == "RobotRecovery")
-                    {
-                        string model = input[1];
-                        int minutes = int.Parse(input[2]);
+                    //    result = taskManager.RobotRecovery(model, minutes);
+                    //}
+                    //else if (input[0] == "PerformService")
+                    //{
+                    //    string serviceName = input[1];
+                    //    int interfaceStandard = int.Parse(input[2]);
+                    //    int totalPowerNeeded = int.Parse(input[3]);
 
-                        result = controller.RobotRecovery(model, minutes);
-                    }
-                    else if (input[0] == "PerformService")
-                    {
-                        string serviceName = input[1];
-                        int interfaceStandard = int.Parse(input[2]);
-                        int totalPowerNeeded = int.Parse(input[3]);
-
-                        result = controller.PerformService(serviceName, interfaceStandard, totalPowerNeeded);
-                    }
-                    else if (input[0] == "Report")
-                    {
-                        result = controller.Report();
-                    }
+                    //    result = taskManager.PerformService(serviceName, interfaceStandard, totalPowerNeeded);
+                    //}
+                    //else if (input[0] == "Report")
+                    //{
+                    //    result = taskManager.Report();
+                    //}
                     writer.WriteLine(result);
                 }
                 catch (Exception ex)

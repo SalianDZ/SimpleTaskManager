@@ -9,7 +9,7 @@ namespace Simple_Task_Manager.Models.Contracts
 
         public string Description { get; }
 
-        public ImportanceLevel importanceLevel { get; }
+        public ImportanceLevel Level { get; }
 
         public DateTime CreationDate { get; }
 
