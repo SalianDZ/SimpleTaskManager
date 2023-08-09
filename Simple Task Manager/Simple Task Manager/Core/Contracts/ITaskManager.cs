@@ -8,5 +8,6 @@ namespace Simple_Task_Manager.Core.Contracts
         public string RemoveTask(string name);
         public string UpdateTask(string name);
         public IEnumerable<ITask> GetTasks();
+        public string ShowTasks();
     }
 }

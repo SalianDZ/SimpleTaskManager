@@ -17,9 +17,18 @@ namespace Simple_Task_Manager.Core
         }
         public void Run()
         {
+            Console.WriteLine("To make a task you need to write the command in correct order.");
+            Console.WriteLine("The order of the tokens for each command are shown below.");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("=-=-=-=-=-=-> Add Task <-=-=-=-=-=-=");
+            Console.WriteLine("The command must be in the following order -> (AddTask/Name/TaskType/Comment/EndDate)");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("=-=-=-=-=-=-> Remove Task <-=-=-=-=-=-=");
+            Console.WriteLine("The command must be in the following order -> (RemoveTask/Name)");
+            Console.WriteLine("========================================================");
             while (true)
             {
-                string[] input = reader.ReadLine().Split();
+                string[] input = reader.ReadLine().Split("/");
                 if (input[0] == "Exit")
                 {
                     Environment.Exit(0);
@@ -36,26 +45,23 @@ namespace Simple_Task_Manager.Core
                         DateTime endDate = DateTime.Parse(input[4]);
                         result = taskManager.AddTask(name, taskType, description, endDate);
                     }
-                    //else if (input[0] == "CreateSupplement")
+                    else if (input[0] == "RemoveTask")
+                    {
+                        string taskName = input[1];
+                        result = taskManager.RemoveTask(taskName);
+                    }
+                    //else if (input[0] == "UpdateTask")
                     //{
-                    //    string typeName = input[1];
-
-                    //    result = taskManager.CreateSupplement(typeName);
-                    //}
-                    //else if (input[0] == "UpgradeRobot")
-                    //{
-                    //    string model = input[1];
-                    //    string supplementTypeName = input[2];
-
+                    //    string nameUpdate = input[1];
+                    //    string taskTypeUpdate = input[2];
+                    //    string commentUpdate = input[3];
+                    //    string endDateUpdate = input[4];
                     //    result = taskManager.UpgradeRobot(model, supplementTypeName);
                     //}
-                    //else if (input[0] == "RobotRecovery")
-                    //{
-                    //    string model = input[1];
-                    //    int minutes = int.Parse(input[2]);
-
-                    //    result = taskManager.RobotRecovery(model, minutes);
-                    //}
+                    else if (input[0] == "ShowTasks")
+                    {
+                        result = taskManager.ShowTasks();
+                    }
                     //else if (input[0] == "PerformService")
                     //{
                     //    string serviceName = input[1];

@@ -43,17 +43,45 @@ namespace Simple_Task_Manager.Core.Contracts
                 throw new ArgumentException($"There is no such such task as {taskType}");
             }
             taskRepository.AddTask(task);
-            return $"Task with name: {name}, Id: {currentId} and EndDate: {endDate} was added to the TaskManager!";
+            return $"Task with name: {name}, Id: {currentId} and EndDate: {endDate.Date} was added to the TaskManager!";
         }
 
         public IEnumerable<ITask> GetTasks()
         {
-            throw new NotImplementedException();
+            return taskRepository.Models;
         }
 
         public string RemoveTask(string name)
         {
-            throw new NotImplementedException();
+            if (!taskRepository.Models.Any(x => x.Name == name))
+            {
+                throw new ArgumentException("There is no task to be removed with the given name!");
+            }
+            ITask taskToRemove = taskRepository.FindByName(name);
+            bool result = taskRepository.RemoveTask(taskToRemove);
+            if (result)
+            {
+                return $"Task with name: {taskToRemove.Name} and ID: {taskToRemove.Id} has been removed";
+            }
+            else
+            {
+                return "You cannot remove a non-existing task!";
+            }
+        }
+
+        public string ShowTasks()
+        {
+            StringBuilder sb = new();
+            //Console.WriteLine("--------------------------------------------------------------------------");
+            //Console.WriteLine("| Index |      Name      |   Task Type   |      Comment      |  End Date  |");
+            //Console.WriteLine("--------------------------------------------------------------------------");
+            foreach (var task in taskRepository.Models)
+            {
+                sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
+                sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.ToShortDateString}  |");
+                sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
+            }
+            return sb.ToString().TrimEnd();
         }
 
         public string UpdateTask(string name)
