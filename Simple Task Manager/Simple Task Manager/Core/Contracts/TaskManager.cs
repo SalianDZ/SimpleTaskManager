@@ -46,6 +46,11 @@ namespace Simple_Task_Manager.Core.Contracts
             return $"Task with name: {name}, Id: {currentId} and EndDate: {endDate.Date} was added to the TaskManager!";
         }
 
+        public string CompleteTask(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<ITask> GetTasks()
         {
             return taskRepository.Models;
@@ -72,21 +77,13 @@ namespace Simple_Task_Manager.Core.Contracts
         public string ShowTasks()
         {
             StringBuilder sb = new();
-            //Console.WriteLine("--------------------------------------------------------------------------");
-            //Console.WriteLine("| Index |      Name      |   Task Type   |      Comment      |  End Date  |");
-            //Console.WriteLine("--------------------------------------------------------------------------");
-            foreach (var task in taskRepository.Models)
-            {
+            foreach (var task in taskRepository.Models.OrderByDescending(x => x.Level))
+            {   
                 sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
-                sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.ToShortDateString}  |");
+                sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.Date}  |");
                 sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
             }
             return sb.ToString().TrimEnd();
-        }
-
-        public string UpdateTask(string name)
-        {
-            throw new NotImplementedException();
         }
     }
 }

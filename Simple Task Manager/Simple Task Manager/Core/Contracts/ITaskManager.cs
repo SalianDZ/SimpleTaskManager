@@ -6,7 +6,7 @@ namespace Simple_Task_Manager.Core.Contracts
     {
         public string AddTask(string name,string taskType, string description, DateTime endDate);
         public string RemoveTask(string name);
-        public string UpdateTask(string name);
+        public string CompleteTask(int id);
         public IEnumerable<ITask> GetTasks();
         public string ShowTasks();
     }
