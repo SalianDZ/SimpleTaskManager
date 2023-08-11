@@ -15,6 +15,10 @@ namespace Simple_Task_Manager.Models.Contracts
 
         public DateTime EndDate { get; }
 
+        public bool IsCompleted { get; }
+
         public string Report();
+
+        public void ChangeStatus();
     }
 }

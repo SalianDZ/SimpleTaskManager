@@ -4,28 +4,29 @@ namespace Simple_Task_Manager.Repositories
 {
     public class TaskRepository 
     {
-        private List<ITask> tasks = new();
+        private List<ITask> incompletedTasks = new();
+
 
         public void AddTask(ITask model)
         {
-            tasks.Add(model);
+            incompletedTasks.Add(model);
         }
 
         public bool RemoveTask(ITask model)
         {
-            return tasks.Remove(model);
+            return incompletedTasks.Remove(model);
         }
 
         public ITask FindById(int id)
         {
-            return tasks.FirstOrDefault(x => x.Id == id);
+            return incompletedTasks.FirstOrDefault(x => x.Id == id);
         }
 
         public ITask FindByName(string name)
         {
-            return tasks.FirstOrDefault(x => x.Name == name);
+            return incompletedTasks.FirstOrDefault(x => x.Name == name);
         }
 
-        public IReadOnlyCollection<ITask> Models => tasks.AsReadOnly();
+        public IReadOnlyCollection<ITask> Models => incompletedTasks.AsReadOnly();
     }
 }

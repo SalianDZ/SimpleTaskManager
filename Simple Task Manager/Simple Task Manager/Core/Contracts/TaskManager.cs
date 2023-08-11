@@ -1,11 +1,7 @@
 ﻿using Simple_Task_Manager.Models;
 using Simple_Task_Manager.Models.Contracts;
 using Simple_Task_Manager.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Simple_Task_Manager.Core.Contracts
 {
@@ -48,7 +44,19 @@ namespace Simple_Task_Manager.Core.Contracts
 
         public string CompleteTask(int id)
         {
-            throw new NotImplementedException();
+            if (!taskRepository.Models.Any(x => x.Id == id))
+            {
+                throw new ArgumentException("There is no task in the repository with this ID!");
+            }
+
+            ITask task = taskRepository.FindById(id);
+
+            if (task.IsCompleted)
+            {
+                throw new ArgumentException("The task is already completed!");
+            }
+            task.ChangeStatus();
+            return "The task is successfully completed!";
         }
 
         public IEnumerable<ITask> GetTasks()
@@ -77,11 +85,32 @@ namespace Simple_Task_Manager.Core.Contracts
         public string ShowTasks()
         {
             StringBuilder sb = new();
-            foreach (var task in taskRepository.Models.OrderByDescending(x => x.Level))
+            foreach (var task in taskRepository.Models.OrderByDescending(x => x.Level).Where(x => x.IsCompleted == false))
             {   
                 sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
                 sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.Date}  |");
                 sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------");
+            }
+            return sb.ToString().TrimEnd();
+        }
+
+        public string ShowAllTasks()
+        {
+            StringBuilder sb = new();
+            foreach (var task in taskRepository.Models.OrderByDescending(x => x.Level))
+            {
+                if (task.IsCompleted)
+                {
+                    sb.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------");
+                    sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.Date}  |  Completed |");
+                    sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------------------");
+                }
+                else
+                {
+                    sb.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    sb.AppendLine($"| {task.Id} |      {task.Name}      |   {task.GetType().Name}   |      {task.Description}      |  {task.EndDate.Date}  |  Not Completed |");
+                    sb.AppendLine("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+                }
             }
             return sb.ToString().TrimEnd();
         }

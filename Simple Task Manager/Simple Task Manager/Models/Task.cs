@@ -19,6 +19,7 @@ namespace Simple_Task_Manager.Models
             Level = importanceLevel;
             EndDate = endDate;
             currentDate = DateTime.Now.Date;
+            IsCompleted = false;
         }
 
         public int Id { get; private set; }
@@ -67,6 +68,8 @@ namespace Simple_Task_Manager.Models
             }
         }
 
+        public bool IsCompleted { get; private set; }
+
         public string Report()
         {
             StringBuilder sb = new();
@@ -74,6 +77,18 @@ namespace Simple_Task_Manager.Models
             sb.AppendLine($"Task (ID: {Id}) -> Name: {Name} - Description: {Description} - Date of adding: {CreationDate} - End Date {EndDate} - <=(Importance Level: {level})=>");
             sb.AppendLine("=-=-=-=-=-=-=-=-=-=-=-=-=");
             return sb.ToString().TrimEnd();
+        }
+
+        public void ChangeStatus()
+        {
+            if (IsCompleted)
+            {
+                IsCompleted = false;
+            }
+            else
+            {
+                IsCompleted = true;
+            }
         }
     }
 }

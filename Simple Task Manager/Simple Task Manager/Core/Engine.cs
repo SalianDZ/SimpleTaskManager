@@ -25,7 +25,15 @@ namespace Simple_Task_Manager.Core
             Console.WriteLine("--------------------------------------------------------");
             Console.WriteLine("=-=-=-=-=-=-> Remove Task <-=-=-=-=-=-=");
             Console.WriteLine("The command must be in the following order -> (RemoveTask/Name)");
-            Console.WriteLine("========================================================");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("=-=-=-=-=-=-> Complete Task <-=-=-=-=-=-=");
+            Console.WriteLine("The command must be in the following order -> (CompleteTask/Task's ID)");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("=-=-=-=-=-=-> Show Tasks <-=-=-=-=-=-=");
+            Console.WriteLine("The command must be in the following order -> (ShowTasks)");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("=-=-=-=-=-=-> Show All Tasks <-=-=-=-=-=-=");
+            Console.WriteLine("The command must be in the following order -> (ShowAllTasks)");
             while (true)
             {
                 string[] input = reader.ReadLine().Split("/");
@@ -50,30 +58,19 @@ namespace Simple_Task_Manager.Core
                         string taskName = input[1];
                         result = taskManager.RemoveTask(taskName);
                     }
-                    //else if (input[0] == "UpdateTask")
-                    //{
-                    //    string nameUpdate = input[1];
-                    //    string taskTypeUpdate = input[2];
-                    //    string commentUpdate = input[3];
-                    //    string endDateUpdate = input[4];
-                    //    result = taskManager.UpgradeRobot(model, supplementTypeName);
-                    //}
+                    else if (input[0] == "CompleteTask")
+                    {
+                       int id = int.Parse(input[1]);
+                       result = taskManager.CompleteTask(id);
+                    }
                     else if (input[0] == "ShowTasks")
                     {
                         result = taskManager.ShowTasks();
                     }
-                    //else if (input[0] == "PerformService")
-                    //{
-                    //    string serviceName = input[1];
-                    //    int interfaceStandard = int.Parse(input[2]);
-                    //    int totalPowerNeeded = int.Parse(input[3]);
-
-                    //    result = taskManager.PerformService(serviceName, interfaceStandard, totalPowerNeeded);
-                    //}
-                    //else if (input[0] == "Report")
-                    //{
-                    //    result = taskManager.Report();
-                    //}
+                    else if (input[0] == "ShowAllTasks")
+                    {
+                        result = taskManager.ShowAllTasks();
+                    }
                     writer.WriteLine(result);
                 }
                 catch (Exception ex)

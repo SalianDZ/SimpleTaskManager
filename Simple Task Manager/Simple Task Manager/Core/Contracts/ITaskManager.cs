@@ -9,5 +9,6 @@ namespace Simple_Task_Manager.Core.Contracts
         public string CompleteTask(int id);
         public IEnumerable<ITask> GetTasks();
         public string ShowTasks();
+        public string ShowAllTasks();
     }
 }
