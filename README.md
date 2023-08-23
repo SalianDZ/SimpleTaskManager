@@ -5,4 +5,4 @@ All tasks are orderer by importance. All the commands are shown below:
     • Delete - Removes the task, chosen by the user.
     • Complete - Completes the task, chosen by the user and it is not visible in the not completed tasks
     • ShowTasks - Displays all tasks that are not completed.
-    • ShowAllTasks
+    • ShowAllTasks -Displays all tasks - completed and not completed.
